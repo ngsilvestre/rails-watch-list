@@ -1,9 +1,9 @@
 <p style="color: green"><%= notice %></p>
-
 <div class="banner flex-col" style="background-image: url('https://images.unsplash.com/photo-1514306191717-452ec28c7814')">
   <h1 class="text-5xl font-bold text-white">Save any kind of movies</h1>
   <h2 class="text-3xl font-bold text-white">Classic</h2>
 </div>
+
 
 <div class="mt-4 py-4 container mx-auto grid gap-4">
   <div class="flex justify-center items-center">
@@ -15,12 +15,19 @@
 
   <div class="grid grid-cols-3 gap-10">
     <% @lists.each do |list| %>
+      <% if list.photo.attached? %>
+        <% img_url = cl_image_path(list.photo.key, width: 800, crop: :fill, secure: true) %>
+      <% else %>
+        <% img_url = "https://images.unsplash.com/photo-1514306191717-452ec28c7814" %>
+      <% end %>
       <%= link_to list_path(list), class: "" do %>
+
+
         <div
           class="banner h-60"
-          style="background-image: url('<%= list.image_url %>')"
+          style="background-image: url('<%= img_url %>')"
         >
-          <h2 class="text-5xl font-bold text-white"><%= list.name %></h2>
+          <h2 class="text-4xl font-bold text-white text-center"><%= list.name %></h2>
         </div>
       <% end %>
     <% end %>
