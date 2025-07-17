@@ -1,14 +1,28 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Lists</h1>
-
-<div id="lists">
-  <% @lists.each do |list| %>
-    <%= render list %>
-    <p>
-      <%= link_to "Show this list", list %>
-    </p>
-  <% end %>
+<div class="banner flex-col" style="background-image: url('https://images.unsplash.com/photo-1514306191717-452ec28c7814')">
+  <h1 class="text-5xl font-bold text-white">Save any kind of movies</h1>
+  <h2 class="text-3xl font-bold text-white">Classic</h2>
 </div>
 
-<%= link_to "New list", new_list_path %>
+<div class="mt-4 py-4 container mx-auto grid gap-4">
+  <div class="flex justify-center items-center">
+    <h4 class="text-3xl flex-grow">My Lists</h4>
+    <%= link_to new_list_path, class: "bg-green-400 text-white p-4 flex rounded font-bold" do %>
+      Create a movie list
+    <% end%>
+  </div>
+
+  <div class="grid grid-cols-3 gap-10">
+    <% @lists.each do |list| %>
+      <%= link_to list_path(list), class: "" do %>
+        <div
+          class="banner h-60"
+          style="background-image: url('<%= list.image_url %>')"
+        >
+          <h2 class="text-5xl font-bold text-white"><%= list.name %></h2>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

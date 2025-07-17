@@ -4,7 +4,7 @@
 
 <div id="bookmarks">
   <% @bookmarks.each do |bookmark| %>
-    <%= render bookmark %>
+    <%= render bookmark, @movies, @lists %>
     <p>
       <%= link_to "Show this bookmark", bookmark %>
     </p>

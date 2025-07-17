@@ -1,3 +1,8 @@
+require 'net/http'
+require 'uri'
+require 'json'
+API_URI = URI("https://api.themoviedb.org/3/movie/top_rated?api_key=64dc6e460807e772ce4666843011b36f")
+
 class ListsController < ApplicationController
   before_action :set_list, only: %i[ show edit update destroy ]
 
@@ -65,6 +70,25 @@ class ListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def list_params
-      params.require(:list).permit(:name)
+      params.require(:list).permit(:name, :image_url)
+    end
+
+    def fetch_api
+      Bookmark.delete_all
+      Movie.delete_all
+      response = Net::HTTP.get_response(API_URI)
+      if response.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(response.body)
+        movies = data['results']
+
+        movies.each do |movie|
+          Movie.create!(
+            title: movie['title'],
+            overview: movie['overview'],
+            rating: movie['vote_average'],
+            poster_url: "https://image.tmdb.org/t/p/w500#{movie['poster_path']}"
+          )
+        end
+      end
     end
 end

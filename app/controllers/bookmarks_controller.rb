@@ -1,6 +1,6 @@
 class BookmarksController < ApplicationController
   before_action :set_bookmark, only: %i[ show edit update destroy ]
-
+  before_action :set_movies_and_lists, only: [:new, :create, :edit, :update]
   # GET /bookmarks or /bookmarks.json
   def index
     @bookmarks = Bookmark.all
@@ -8,10 +8,12 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/1 or /bookmarks/1.json
   def show
+
   end
 
   # GET /bookmarks/new
   def new
+    @list = List.find(params[:list_id])
     @bookmark = Bookmark.new
   end
 
@@ -52,7 +54,7 @@ class BookmarksController < ApplicationController
     @bookmark.destroy!
 
     respond_to do |format|
-      format.html { redirect_to bookmarks_path, status: :see_other, notice: "Bookmark was successfully destroyed." }
+      # format.html { redirect_to bookmarks_path, status: :see_other, notice: "Bookmark was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -61,6 +63,10 @@ class BookmarksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bookmark
       @bookmark = Bookmark.find(params[:id])
+    end
+
+    def set_movies_and_lists
+      @movies = Movie.all
     end
 
     # Only allow a list of trusted parameters through.

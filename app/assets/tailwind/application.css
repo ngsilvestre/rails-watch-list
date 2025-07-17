@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  .banner {
+    @apply w-full h-100 bg-center bg-cover flex justify-center items-center;
+  }
+}

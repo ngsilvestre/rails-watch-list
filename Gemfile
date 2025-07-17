@@ -62,3 +62,9 @@ end
 
 gem 'rspec-rails', group: [ :test ]
 gem 'rails-controller-testing', group: [ :test ]
+
+gem "faker"
+gem "tailwindcss-rails"
+gem "simple_form"
+gem "foreman", "~> 0.88.1"
+gem "pg"
